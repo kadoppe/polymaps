@@ -590,6 +590,27 @@ po.map = function() {
     return map.center(center);
   };
 
+  function easing(time, from, distance, duration) {
+    return distance * time / duration + from;
+  }
+
+  map.animationZoom = function(x, duration) {
+    var begin = new Date() - 0,
+        from = map.zoom(),
+        distance = x - from;
+
+    var id = setInterval(function() {
+      var time = new Date() - begin;
+      var current = easing(time, from, distance, duration);
+      if (time > duration) {
+        clearInterval(id);
+        current = from + distance;
+      }
+
+      map.zoomBy(current - map.zoom());
+    }, 1000 / 60);
+  };
+
   map.zoomBy = function(z, x0, l) {
     if (arguments.length < 2) return map.zoom(zoom + zoomFraction + z);
 
