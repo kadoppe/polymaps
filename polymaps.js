@@ -568,6 +568,31 @@ po.map = function() {
     });
   };
 
+  map.animationCenter = function(x, duration) {
+    var begin = new Date() - 0,
+        fromLon = map.center().lon,
+        fromLat = map.center().lat,
+        distanceLon = x.lon - fromLon,
+        distanceLat = x.lat - fromLat;
+
+    var id = setInterval(function() {
+      var time = new Date() - begin;
+      var currentLon = easing(time, fromLon, distanceLon, duration);
+      var currentLat = easing(time, fromLat, distanceLon, duration);
+
+      if (time > duration) {
+        clearInterval(id);
+        currentLon = fromLon + distanceLon;
+        currentLat = fromLat + distanceLat;
+      }
+
+      map.center({
+        lon: currentLon,
+        lat: currentLat
+      });
+    }, 1000 / 100);
+  };
+
   map.centerRange = function(x) {
     if (!arguments.length) return centerRange;
     centerRange = x;
@@ -608,7 +633,7 @@ po.map = function() {
       }
 
       map.zoomBy(current - map.zoom());
-    }, 1000 / 60);
+    }, 1000 / 100);
   };
 
   map.zoomBy = function(z, x0, l) {
