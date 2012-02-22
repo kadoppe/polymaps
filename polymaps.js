@@ -568,7 +568,7 @@ po.map = function() {
     });
   };
 
-  map.animationCenter = function(x, duration) {
+  map.animationCenter = function(x, duration, fn) {
     var begin = new Date() - 0,
         fromLon = map.center().lon,
         fromLat = map.center().lat,
@@ -578,7 +578,7 @@ po.map = function() {
     var id = setInterval(function() {
       var time = new Date() - begin;
       var currentLon = easing(time, fromLon, distanceLon, duration);
-      var currentLat = easing(time, fromLat, distanceLon, duration);
+      var currentLat = easing(time, fromLat, distanceLat, duration);
 
       if (time > duration) {
         clearInterval(id);
@@ -590,7 +590,11 @@ po.map = function() {
         lon: currentLon,
         lat: currentLat
       });
-    }, 1000 / 100);
+
+      if (time > duration) {
+        fn();
+      }
+    }, 1);
   };
 
   map.centerRange = function(x) {
@@ -619,7 +623,7 @@ po.map = function() {
     return distance * time / duration + from;
   }
 
-  map.animationZoom = function(x, duration) {
+  map.animationZoom = function(x, duration, fn) {
     var begin = new Date() - 0,
         from = map.zoom(),
         distance = x - from;
@@ -633,7 +637,11 @@ po.map = function() {
       }
 
       map.zoomBy(current - map.zoom());
-    }, 1000 / 100);
+
+      if (time > duration) {
+        fn();
+      }
+    }, 1);
   };
 
   map.zoomBy = function(z, x0, l) {
