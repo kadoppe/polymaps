@@ -1162,8 +1162,8 @@ po.image = function() {
   function load(tile) {
     var element = tile.element = po.svg("image"), size = image.map().tileSize();
     element.setAttribute("preserveAspectRatio", "none");
-    element.setAttribute("width", size.x);
-    element.setAttribute("height", size.y);
+    element.setAttribute("width", size.x * 1.1 );
+    element.setAttribute("height", size.y * 1.1 );
 
     if (typeof url == "function") {
       element.setAttribute("opacity", 0);
