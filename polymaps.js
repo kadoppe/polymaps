@@ -2206,7 +2206,8 @@ po.compass = function() {
       case "bottom-left": y = size.y - y; break;
       case "bottom-right": x = size.x - x; y = size.y - y; break;
     }
-    g.setAttribute("transform", "translate(" + x + "," + y + ")");
+    //g.setAttribute("transform", "translate(" + x + "," + y + ")");
+    g.setAttribute("transform", "translate(" + 14 + "," + 20 + ")");
     dragRect.setAttribute("transform", "translate(" + -x + "," + -y + ")");
     for (var i in ticks) {
       i == map.zoom()
@@ -2319,7 +2320,8 @@ po.compass = function() {
     }
     if (map = x) {
       container = map.container();
-      container.appendChild(g);
+      //container.appendChild(g);
+      document.getElementById('map-compass').appendChild(g)
       container.addEventListener("mousedown", mousedown, false);
       window = container.ownerDocument.defaultView;
       window.addEventListener("mousemove", mousemove, false);
