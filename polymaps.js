@@ -2206,7 +2206,8 @@ po.compass = function() {
       case "bottom-left": y = size.y - y; break;
       case "bottom-right": x = size.x - x; y = size.y - y; break;
     }
-    g.setAttribute("transform", "translate(" + x + "," + y + ")");
+    //g.setAttribute("transform", "translate(" + x + "," + y + ")");
+    //g.setAttribute("transform", "translate(" + 14 + "," + 20 + ")");
     dragRect.setAttribute("transform", "translate(" + -x + "," + -y + ")");
     for (var i in ticks) {
       i == map.zoom()
