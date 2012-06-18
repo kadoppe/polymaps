@@ -572,29 +572,34 @@ po.map = function() {
     var begin = new Date() - 0,
         fromLon = map.center().lon,
         fromLat = map.center().lat,
+        fromZoom = map.zoom(),
         distanceLon = x.lon - fromLon,
-        distanceLat = x.lat - fromLat;
+        distanceLat = x.lat - fromLat,
+        distanceZoom = x.zoom - fromZoom;
 
     var id = setInterval(function() {
       var time = new Date() - begin;
       var currentLon = easing(time, fromLon, distanceLon, duration);
       var currentLat = easing(time, fromLat, distanceLat, duration);
+      var currentZoom = easing(time, fromZoom, distanceZoom, duration);
 
       if (time > duration) {
         clearInterval(id);
         currentLon = fromLon + distanceLon;
         currentLat = fromLat + distanceLat;
+        currentZoom = fromZoom + distanceZoom;
       }
 
       map.center({
         lon: currentLon,
         lat: currentLat
       });
+      map.zoomBy(currentZoom - map.zoom());
 
       if (time > duration) {
         fn();
       }
-    }, 1);
+    }, 10);
   };
 
   map.centerRange = function(x) {
@@ -641,7 +646,7 @@ po.map = function() {
       if (time > duration) {
         fn();
       }
-    }, 1);
+    }, 5);
   };
 
   map.zoomBy = function(z, x0, l) {
